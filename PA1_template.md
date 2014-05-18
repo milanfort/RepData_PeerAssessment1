@@ -115,7 +115,7 @@ formatTime <- function(x) {
 ```
 
 
-The following plot shows the average number of steps taken for each 5-minute time interval:
+The following plot shows the average number of steps taken for each 5-minute interval:
 
 ```r
 numberOfIntervals <- 12 * 24
@@ -127,7 +127,8 @@ timeSeries <- tapply(completeData$steps, completeData$time, mean)
 
 colors <- rep("lightskyblue", dim(timeSeries))
 colors[which.max(timeSeries)] <- "red"
-barplot(timeSeries, col = colors, xlab = "5-minute intervals", ylab = "Average number of steps")
+barplot(timeSeries, col = colors, xlab = "5-minute interval", ylab = "Average number of steps", 
+    main = "Average number of steps per time interval")
 max <- timeSeries[timeSeries == max(timeSeries)]
 maxIndex <- which.max(timeSeries)
 text(155, max - 5, paste0("max@", names(timeSeries[maxIndex])), col = "red", 
@@ -228,7 +229,7 @@ The following histogram shows the total number of steps per day for this tidy da
 tidyData$day <- as.factor(as.character(tidyData$date))
 totalStepsPerDay2 <- tapply(tidyData$steps, tidyData$day, sum)
 
-hist(totalStepsPerDay2, breaks = 8, col = "orange", main = "Histogram of steps per day", 
+hist(totalStepsPerDay2, breaks = 8, col = "darkgreen", main = "Histogram of steps per day (missing values filled)", 
     xlab = "Steps per day")
 abline(v = median(totalStepsPerDay2), col = "steelblue", lwd = "2", lty = "22")
 text(median(totalStepsPerDay2) + 2600, 24.75, "median ~ mean", col = "steelblue")
@@ -268,7 +269,7 @@ tidyData$daytype <- factor(sapply(tidyData$date, dayType), levels = c("weekday",
 
 
 
-The following plot shows a comparison betweeen the average number of steps taken for each 5-minute time interval during the weekend days and during the weekdays:
+The following plot shows a comparison betweeen the average number of steps taken for each 5-minute interval during the weekend days and during the weekdays:
 
 ```r
 weekend <- split(tidyData, tidyData$daytype)$weekend
@@ -279,7 +280,6 @@ timeSeriesWeekday <- tapply(weekday$steps, weekday$interval, mean)
 par(mfrow = c(2, 1))
 plot(as.numeric(names(timeSeriesWeekend)), timeSeriesWeekend, type = "l", lwd = 2, 
     col = "blue", ylim = c(0, 230), main = "weekend", xlab = "", ylab = "Number of steps")
-
 plot(as.numeric(names(timeSeriesWeekday)), timeSeriesWeekday, type = "l", lwd = 2, 
     col = "blue", ylim = c(0, 230), main = "weekday", xlab = "Interval", ylab = "Number of steps")
 ```
